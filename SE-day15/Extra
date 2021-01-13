@@ -1,0 +1,50 @@
+HashMap与HashTable的区别
+
+HashMap:线程不安全，没有contains方法(与containsValue一样的效果)，
+key与Value可以为null，初始容量为16，扩容时为当前容量*2，使用get()方法不能够判断该键是否存在，
+需要用containsKey方法来判定该键是否存在。
+HashMap继承AbstractMap，JDK1.8优化扩容机制，有红黑树，尾插法。（1.8前使用头插法），
+当HashMap需要线程安全时使用ConcurrentHashMap
+
+HashTable:线程安全，初始容量为11，扩容时为当前容量*2+1，get()可以判断该键是否存在,
+key与Value不可以为null，HashTable继承Dictionary，没有红黑树。
+拥有properties类(HashMap并没有此子类)。
+properties类是让用户脱离程序本身修改相关的参数，方便用户配置修改参数的一个工具类。
+使用键值对的形式来改变文件中的参数
+虽然HashTable已经过时，但是properties类依旧是Java开发者中必须使用的类。
+
+在HashMap、HashSet中在1.8之前使用头插法，1.8后使用尾插法。
+在多线程并发使用情况下，节点间互相引用，扩容机制会导致链表成环。
+
+头插式:不断将新的节点插入到表头后面，会改变数据输入的顺序，多线程头插法容易导致数据丢失，链表死循环
+
+尾插式:将新的节点插入到节点的末尾处，不改变数据输入的顺序。
+
+扩容机制：HashMap.resize();     HashTable.rehash();
+
+
+默认值：
+    HashMap:static final int DEFAULT_INITIAL_CAPACITY = 1 << 4;
+    HashTable:无参构造，默认为11
+    public Hashtable() {this(11, 0.75f);}
+
+JDK1.8为HashSet、HashMap加入了红黑树，是为了提高查询速度，降低了增删效率(对于同一个哈希值极多的数据下)
+作出的牺牲，减少因为同hashcode的数据存储过多导致链表过长导致的查询能力低下的情况。
+针对超长链的检查，时间复杂度从O(n)降到了O(log2n)
+
+新增的hash()计算值的优化，减少哈希碰撞（两个输入串计算的hash值一样）的概率
+
+哈希碰撞的解决方案：HashMap使用链表法解决
+
+Lambda表达式(简化代码)、接口中新增默认方法(接口升级)和静态方法(减少代码冗余)、
+函数式接口(只定义了一个抽象方法的接口，更好地支持Lambda表达式)、Stream API、
+获取本地时间LocalDateTime、LocalDate、LocalTime(线程安全，不能修改)
+
+多线程的四种实现方式
+1、继承Thread类创建线程
+2、实现Runnable接口创建线程
+3、实现Callable接口通过FutureTask包装器来创建线程
+4、使用ExecutorService、Callable、Future实现有返回结果的线程
+
+在run方法中可以启用线程，但会导致线程死循环导致栈空间资源被耗尽，
+返回StackOverflowError的异常，线程Recursive call递归调用层数过多被迫停止

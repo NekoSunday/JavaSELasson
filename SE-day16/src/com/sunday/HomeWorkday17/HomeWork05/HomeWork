@@ -1,0 +1,13 @@
+public class test implements Runnable{
+    public static void main(String[] args) {
+        Thread t = new Thread(new test());
+        t.start();
+    }
+    public void run(int num)
+    {
+        for (int i = 0; i < num; i++)
+        { System.out.println(i); }
+    }
+}
+
+报错！，run方法没有重写，run方法在接口中没有带参数
