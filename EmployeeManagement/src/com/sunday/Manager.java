@@ -1,7 +1,7 @@
 package com.sunday;
 
-public class Manager extends Employee{
-    private final static double EXTRAMONEY=2000;
+public class Manager extends Employee implements SalaryImpl,IdentityImpl{
+    final static double EXTRAMONEY=2000;
 
-    
+
 }

@@ -1,5 +1,7 @@
 package com.sunday;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 public class util {
@@ -24,5 +26,21 @@ public class util {
     }
     public static void printOutAttention(){
         System.out.println("您可以进行如下操作：(输入编号即可)");
+    }
+
+    public static String getTime(){
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy‐MM‐dd HH:mm:ss");
+        return sdf.format(date);
+    }
+
+    public static Integer getIntegar(){
+        String integarIndex = enterStr();
+        return Integer.parseInt(integarIndex);
+    }
+
+    public static Double getDouble(){
+        String doubleIndex= enterStr();
+        return Double.parseDouble(doubleIndex);
     }
 }
