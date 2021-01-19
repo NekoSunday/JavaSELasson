@@ -14,7 +14,9 @@ public class util {
     static Socket socket;
     static BufferedWriter bw;
     static BufferedReader br;
-
+    static BufferedWriter adminBw;
+    static BufferedWriter employeeBw;
+    static BufferedReader employeeBr;
 
     public static String getTime(){
         Date date = new Date();
