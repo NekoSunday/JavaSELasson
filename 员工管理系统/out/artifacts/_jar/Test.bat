@@ -1,0 +1,1 @@
+java  -jar 学生管理系统.jar

@@ -1,0 +1,127 @@
+1.list.add(inde)
+   list具有伸展性，可以根据需要进行扩容
+   // 将指定的元素追加到此列表的末尾
+   public boolean add(E e) {
+   	ensureCapacityInternal(size + 1);  // Increments modCount!!
+   	elementData[size++] = e;
+   	return true;
+   }
+
+   // 将默认长度和最小长度进行比较， 如果默认长度大于最小长度，那么最小长度 等于 默认长度
+   private void ensureCapacityInternal(int minCapacity) {
+       if (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) {
+           minCapacity = Math.max(DEFAULT_CAPACITY, minCapacity);
+       }
+       ensureExplicitCapacity(minCapacity);
+   }
+   public static int max(int a, int b) {
+       return (a >= b) ? a : b;
+   }
+
+   // 判断数组是否需要扩容了
+   private void ensureExplicitCapacity(int minCapacity) {
+       modCount++;
+       // overflow-conscious code
+       if (minCapacity - elementData.length > 0) // 如果最小长度减去当前长度等于0了，说明长度不够，需要扩容
+           grow(minCapacity);
+   }
+
+   // 扩容
+   private void grow(int minCapacity) {
+       // overflow-conscious code
+       int oldCapacity = elementData.length; // 旧的长度 = 当前长度
+       int newCapacity = oldCapacity + (oldCapacity >> 1); // 新的数组长度 = 旧的数组长度 + 旧的数组长度的一半
+       if (newCapacity - minCapacity < 0) // 如果新的长度-最小长度 就把最小长度赋值给新长度
+           newCapacity = minCapacity;
+       if (newCapacity - MAX_ARRAY_SIZE > 0) // 如果说 新的长度 - 最大长度（Integer.MAX_VALUE - 8） 大于0
+           newCapacity = hugeCapacity(minCapacity); // 新的长度 等于 int的最大长度 或者 int最大长-8
+       // minCapacity is usually close to size, so this is a win:
+       elementData = Arrays.copyOf(elementData, newCapacity); // 然后给当前数组（elementData） 复制新的长度
+   }
+
+   // 当最小的长度小于0 的时候，此时抛出异常
+   private static int hugeCapacity(int minCapacity) {
+       if (minCapacity < 0) // overflow
+           throw new OutOfMemoryError();
+       return (minCapacity > MAX_ARRAY_SIZE) ? // 当最小长度 大于了最大长度 -> 那么就把int类型的最大长度返回 否则 就把int类型最大长度-8 返回
+           Integer.MAX_VALUE :
+           MAX_ARRAY_SIZE;
+   }
+
+   -----------------------------------------get-----------------------------------
+   // 获取list元素
+   public E get(int index) {
+       rangeCheck(index);
+       return elementData(index);
+   }
+    先进性index范围检查，看是否超出数组长度。如果没有超出数组长度，那返回当前数组的index个元素
+   private void rangeCheck(int index) {
+       if (index >= size)
+           throw new IndexOutOfBoundsException(outOfBoundsMsg(index));
+       }
+   }
+
+   // 返回当前数组的index个元素
+   E elementData(int index) {
+       return (E) elementData[index];
+   }
+
+
+-------------------------------set（int index,String element）--------------------------------------------------------------
+// 设置
+public E set(int index, E element) {
+    rangeCheck(index); // 判断是否越界
+
+    E oldValue = elementData(index); // 取得当前index的元素
+    elementData[index] = element; // 将传过来的element赋值到数组的index位置
+    return oldValue; // 返回旧的值
+}
+
+// 返回 数组的index位置的元素
+E elementData(int index) {
+    return (E) elementData[index];
+}
+//检查是否越界
+ private void rangeCheck(int index) {
+        if (index >= size)  //如果集合设置的索引大于集合的大小 则会抛出越界异常
+            throw new IndexOutOfBoundsException(outOfBoundsMsg(index));
+    }
+
+--------------------------------------remove（Object/index）-----------------------------------------------------
+可以传入 index索引去移除，或者是传入一个对象
+  public E remove(int index) {
+        rangeCheck(index);  //检查传入的index的索引是否越界。
+
+        modCount++;
+        E oldValue = elementData(index);  //获取当前集合的索引
+
+        int numMoved = size - index - 1;
+        if (numMoved > 0)
+            System.arraycopy(elementData, index+1, elementData, index,
+                             numMoved);//删除该列表中指定位置的元素。 将任何后续元素移动到左侧（从其索引中减去一个元素）。
+        elementData[--size] = null; // clear to let GC do its work
+        return oldValue; //返回
+    }
+
+  -----------------------------------------------------------
+     public boolean remove(Object o) {
+            if (o == null) {
+                for (int index = 0; index < size; index++)
+                    if (elementData[index] == null) {
+                        fastRemove(index);
+                        return true;
+                    }
+            } else {
+                for (int index = 0; index < size; index++)
+                    if (o.equals(elementData[index])) {
+                        fastRemove(index);
+                        return true;
+                    }
+            }
+            return false;
+        }
+从列表中删除指定元素的第一个出现（如果存在）。
+如果列表不包含该元素，则它不会更改。
+删除具有最低索引i的元素，
+使得(o==null ? elementData[index] == null: elementData[index]) （如果存在这样的元素）。
+如果此列表包含指定的元素（或等效地，如果此列表作为调用的结果而更改），则返回true 。
