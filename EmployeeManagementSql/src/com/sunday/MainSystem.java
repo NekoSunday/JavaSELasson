@@ -26,6 +26,7 @@ public class MainSystem {
             util.socket = util.ss.accept();
             util.bw = new BufferedWriter(new OutputStreamWriter(util.socket.getOutputStream()));
             util.br = new BufferedReader(new InputStreamReader(util.socket.getInputStream()));
+            stmt = MainSystem.system.createStatement();
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -84,9 +84,9 @@ public class sqlUtils {
         }
     }
 
-    public static String insertValue(String tableName,int valuesNum, String... enterValues) {
+    public static String insertValue(String tableName, int valuesNum, String... enterValues) {
         try {
-            StringBuilder sql = new StringBuilder("insert into "+tableName+" values\n");
+            StringBuilder sql = new StringBuilder("insert into " + tableName + " values\n");
             sql.append("(");
             for (int i = 0; i < valuesNum; i++) {
                 if (enterValues[i].equals("null")) {
@@ -109,13 +109,35 @@ public class sqlUtils {
         return null;
     }
 
-    public static void printValues(String str){
+    public static void printIdentityValues(String sql) {
         try {
-            MainSystem.ps=MainSystem.system.prepareStatement(str);
-
+            /*MainSystem.ps=MainSystem.system.prepareStatement(str);*/
+            MainSystem.rs = MainSystem.stmt.executeQuery(sql);
+            while (MainSystem.rs.next()) {
+                int id = MainSystem.rs.getInt("id");
+                String ename = MainSystem.rs.getString("ename");
+                String job = MainSystem.rs.getString("job");
+                String dept = MainSystem.rs.getString("dept");
+                String phone_number = MainSystem.rs.getString("phone_number");
+                if (sql.contains("where")) {
+                    util.flushBw("ID：" + id + "，姓名：" + ename + "，职务：" + job + "，部门：" + dept + "，电话：" + phone_number);
+                }else{
+                    util.flushBw(id + "        " + ename + "        " + job + "        " + dept + "        " + phone_number);
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static String updateIdentityValue(String tableName,Integer id,String... enterValues){
+        try {
+            String sql="update "+tableName+" set ename='"+enterValues[0]+"',job='"+enterValues[1]+"',dept='"+enterValues[2]+"',phone_number='"+enterValues[3]+"' where id='"+id+"';";
+            return sql;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
 
