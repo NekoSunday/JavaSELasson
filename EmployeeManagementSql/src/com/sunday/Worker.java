@@ -1,7 +1,5 @@
 package com.sunday;
 
-import com.utilpackage.util;
-
 import java.util.HashMap;
 
 public class Worker {
@@ -22,7 +20,7 @@ public class Worker {
         this.job = job;
         this.department = department;
         this.phoneNum = phoneNum;
-        this.getDate = util.getTime();
+//        this.getDate = util.getTime();
     }
 
     public Worker(double workTime, double salaryPerHour, double salarySum, double bonusMoney) {
@@ -30,7 +28,7 @@ public class Worker {
         this.salaryPerHour = salaryPerHour;
         this.bonusMoney = bonusMoney;
         this.salarySum = salarySum;
-        this.getDate = util.getTime();
+//        this.getDate = util.getTime();
     }
 
     public Worker() {

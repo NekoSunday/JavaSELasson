@@ -5,8 +5,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class util {
 
@@ -16,10 +15,8 @@ public class util {
     public static BufferedReader br;
 
 
-    public static String getTime(){
-        Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy‐MM‐dd HH:mm:ss");
-        return sdf.format(date);
+    public static Timestamp getTime(){
+        return new Timestamp(System.currentTimeMillis());
     }
 
     public static Integer getIntegar() throws IOException {
