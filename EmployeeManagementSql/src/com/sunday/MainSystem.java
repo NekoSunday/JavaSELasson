@@ -1,5 +1,6 @@
 package com.sunday;
 
+import com.utilpackage.StartDatabase;
 import com.utilpackage.sqlUtils;
 import com.utilpackage.util;
 
@@ -22,11 +23,12 @@ public class MainSystem {
     static {
         try {
             system = sqlUtils.getConnection();
+            stmt = MainSystem.system.createStatement();
+            StartDatabase.start();
             util.ss=new ServerSocket(8888);
             util.socket = util.ss.accept();
             util.bw = new BufferedWriter(new OutputStreamWriter(util.socket.getOutputStream()));
             util.br = new BufferedReader(new InputStreamReader(util.socket.getInputStream()));
-            stmt = MainSystem.system.createStatement();
         } catch (Exception e) {
             e.printStackTrace();
         }

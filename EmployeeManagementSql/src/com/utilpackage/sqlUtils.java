@@ -10,7 +10,6 @@ import java.util.Properties;
 
 public class sqlUtils {
     private static DataSource ds;
-    public static ResultSet indexrs;
 
     static {
         try {
@@ -160,15 +159,6 @@ public class sqlUtils {
             e.printStackTrace();
         }
         return -1;
-    }
-
-    public static void getNewEmployeeId(String... checkValues) {
-        try {
-            String sql = "select * from employee_identity where ename=" + checkValues[0] + "',job='" + checkValues[1] + "',dept='" + checkValues[2] + "',phone_number='" + checkValues[3] + "';";
-            MainSystem.rs = MainSystem.stmt.executeQuery(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     public static int checkJob(int id) {
