@@ -25,25 +25,36 @@ public class MainSystem {
             system = sqlUtils.getConnection();
             stmt = MainSystem.system.createStatement();
             StartDatabase.start();
-            util.ss=new ServerSocket(8888);
-            util.socket = util.ss.accept();
+            util.ss = new ServerSocket(8888);
+            /*util.socket = util.ss.accept();
             util.bw = new BufferedWriter(new OutputStreamWriter(util.socket.getOutputStream()));
-            util.br = new BufferedReader(new InputStreamReader(util.socket.getInputStream()));
+            util.br = new BufferedReader(new InputStreamReader(util.socket.getInputStream()));*/
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public static void main(String[] args) throws Exception {
-        MainSystem.openSystem();
+        new Thread(() -> {
+            try {
+                while (true) {
+                    util.socket = util.ss.accept();
+                    util.bw = new BufferedWriter(new OutputStreamWriter(util.socket.getOutputStream()));
+                    util.br = new BufferedReader(new InputStreamReader(util.socket.getInputStream()));
+                    MainSystem.openSystem();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
 
     public static void printAdmin() throws Exception {
-        util.printBw("|------------ç®¡ç†å‘˜ä½ å¥½ï¼-----------|");
-        util.printBw("æ‚¨å¯ä»¥è¿›è¡Œå¦‚ä¸‹æ“ä½œï¼š(è¾“å…¥ç¼–å·å³å¯)");
-        util.printBw("1ã€ç™»å½•      2ã€æ³¨å†Œ      0ã€é€€å‡ºç³»ç»Ÿ");
-        util.flushBw("è¯·é€‰æ‹©æ‚¨çš„æ“ä½œï¼š");
+        util.printBw("|------------¹ÜÀíÔ±ÄãºÃ£¡-----------|");
+        util.printBw("Äú¿ÉÒÔ½øĞĞÈçÏÂ²Ù×÷£º(ÊäÈë±àºÅ¼´¿É)");
+        util.printBw("1¡¢µÇÂ¼      2¡¢×¢²á      0¡¢ÍË³öÏµÍ³");
+        util.flushBw("ÇëÑ¡ÔñÄúµÄ²Ù×÷£º");
         String indexSelect = util.readClient();
         switch (indexSelect) {
             case "1":
@@ -53,10 +64,10 @@ public class MainSystem {
                 Admin.registerAdmin();
                 break;
             case "0":
-                util.flushBw("ç³»ç»Ÿé€€å‡º");
+                util.flushBw("ÏµÍ³ÍË³ö");
                 break;
             default:
-                util.flushBw("è¯·é‡æ–°è¾“å…¥ç¼–å·");
+                util.flushBw("ÇëÖØĞÂÊäÈë±àºÅ");
                 printAdmin();
                 break;
         }
@@ -68,10 +79,10 @@ public class MainSystem {
     }
 
     public static void printSalaryMenu() throws Exception {
-        util.printBw("|-----------å‘˜å·¥å·¥èµ„ä¿¡æ¯ç®¡ç†-------------|");
-        util.printBw("æ‚¨å¯ä»¥è¿›è¡Œå¦‚ä¸‹æ“ä½œï¼š(è¾“å…¥ç¼–å·å³å¯)");
-        util.printBw("1ã€å¢åŠ å·¥èµ„ä¿¡æ¯  2ã€åˆ é™¤å·¥èµ„ä¿¡æ¯  3ã€ä¿®æ”¹å·¥èµ„ä¿¡æ¯  4ã€æŸ¥è¯¢å·¥èµ„ä¿¡æ¯  5ã€æ˜¾ç¤ºå·¥èµ„åˆ—è¡¨  0ã€è¿”å›ä¸Šçº§èœå•");
-        util.flushBw("è¯·é€‰æ‹©æ‚¨çš„æ“ä½œï¼š");
+        util.printBw("|-----------Ô±¹¤¹¤×ÊĞÅÏ¢¹ÜÀí-------------|");
+        util.printBw("Äú¿ÉÒÔ½øĞĞÈçÏÂ²Ù×÷£º(ÊäÈë±àºÅ¼´¿É)");
+        util.printBw("1¡¢Ôö¼Ó¹¤×ÊĞÅÏ¢  2¡¢É¾³ı¹¤×ÊĞÅÏ¢  3¡¢ĞŞ¸Ä¹¤×ÊĞÅÏ¢  4¡¢²éÑ¯¹¤×ÊĞÅÏ¢  5¡¢ÏÔÊ¾¹¤×ÊÁĞ±í  0¡¢·µ»ØÉÏ¼¶²Ëµ¥");
+        util.flushBw("ÇëÑ¡ÔñÄúµÄ²Ù×÷£º");
         String indexSelect = util.readClient();
         switch (indexSelect) {
             case "1":
@@ -93,17 +104,17 @@ public class MainSystem {
                 printMainMenu();
                 break;
             default:
-                util.flushBw("è¯·é‡æ–°è¾“å…¥ç¼–å·");
+                util.flushBw("ÇëÖØĞÂÊäÈë±àºÅ");
                 printSalaryMenu();
                 break;
         }
     }
 
     public static void printIdentityMenu() throws Exception {
-        util.printBw("|-----------å‘˜å·¥èº«ä»½ä¿¡æ¯ç®¡ç†-------------|");
-        util.printBw("æ‚¨å¯ä»¥è¿›è¡Œå¦‚ä¸‹æ“ä½œï¼š(è¾“å…¥ç¼–å·å³å¯)");
-        util.printBw("1ã€å¢åŠ å‘˜å·¥ä¿¡æ¯  2ã€åˆ é™¤å‘˜å·¥ä¿¡æ¯  3ã€ä¿®æ”¹å‘˜å·¥ä¿¡æ¯  4ã€æŸ¥è¯¢å‘˜å·¥ä¿¡æ¯  5ã€æ˜¾ç¤ºå‘˜å·¥åˆ—è¡¨  0ã€è¿”å›ä¸Šçº§èœå•");
-        util.flushBw("è¯·é€‰æ‹©æ‚¨çš„æ“ä½œï¼š");
+        util.printBw("|-----------Ô±¹¤Éí·İĞÅÏ¢¹ÜÀí-------------|");
+        util.printBw("Äú¿ÉÒÔ½øĞĞÈçÏÂ²Ù×÷£º(ÊäÈë±àºÅ¼´¿É)");
+        util.printBw("1¡¢Ôö¼ÓÔ±¹¤ĞÅÏ¢  2¡¢É¾³ıÔ±¹¤ĞÅÏ¢  3¡¢ĞŞ¸ÄÔ±¹¤ĞÅÏ¢  4¡¢²éÑ¯Ô±¹¤ĞÅÏ¢  5¡¢ÏÔÊ¾Ô±¹¤ÁĞ±í  0¡¢·µ»ØÉÏ¼¶²Ëµ¥");
+        util.flushBw("ÇëÑ¡ÔñÄúµÄ²Ù×÷£º");
         String indexSelect = util.readClient();
         switch (indexSelect) {
             case "1":
@@ -125,17 +136,17 @@ public class MainSystem {
                 printMainMenu();
                 break;
             default:
-                util.flushBw("è¯·é‡æ–°è¾“å…¥ç¼–å·");
+                util.flushBw("ÇëÖØĞÂÊäÈë±àºÅ");
                 printIdentityMenu();
                 break;
         }
     }
 
     public static void printMainMenu() throws Exception {
-        util.printBw("|-----------------æ¬¢è¿æ¥åˆ°å‘˜å·¥ç®¡ç†ç³»ç»Ÿ----------------|");
-        util.printBw("æ‚¨å¯ä»¥è¿›è¡Œå¦‚ä¸‹æ“ä½œï¼š(è¾“å…¥ç¼–å·å³å¯)");
-        util.printBw("1ã€å‘˜å·¥èº«ä»½ä¿¡æ¯ç®¡ç†          2ã€å‘˜å·¥å·¥èµ„ä¿¡æ¯ç®¡ç†             0ã€é€€å‡ºç³»ç»Ÿ");
-        util.flushBw("è¯·é€‰æ‹©æ‚¨çš„æ“ä½œï¼š");
+        util.printBw("|-----------------»¶Ó­À´µ½Ô±¹¤¹ÜÀíÏµÍ³----------------|");
+        util.printBw("Äú¿ÉÒÔ½øĞĞÈçÏÂ²Ù×÷£º(ÊäÈë±àºÅ¼´¿É)");
+        util.printBw("1¡¢Ô±¹¤Éí·İĞÅÏ¢¹ÜÀí          2¡¢Ô±¹¤¹¤×ÊĞÅÏ¢¹ÜÀí             0¡¢ÍË³öÏµÍ³");
+        util.flushBw("ÇëÑ¡ÔñÄúµÄ²Ù×÷£º");
         String indexSelect = util.readClient();
         switch (indexSelect) {
             case "1":
@@ -145,10 +156,10 @@ public class MainSystem {
                 printSalaryMenu();
                 break;
             case "0":
-                util.flushBw("ç³»ç»Ÿé€€å‡º");
+                util.flushBw("ÏµÍ³ÍË³ö");
                 break;
             default:
-                util.flushBw("è¯·é‡æ–°è¾“å…¥ç¼–å·");
+                util.flushBw("ÇëÖØĞÂÊäÈë±àºÅ");
                 printMainMenu();
                 break;
         }

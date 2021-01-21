@@ -8,78 +8,91 @@ import static com.sunday.Worker.indexJudge;
 public interface IdentityImpl {
 
     default void setEmployeeIdentity() throws Exception {
-        util.flushBw("è¯·è¾“å…¥å‘˜å·¥å§“å");
+        util.flushBw("ÇëÊäÈëÔ±¹¤ĞÕÃû");
         String indexName = util.readClient();
         indexJudge[0] = indexName;
-        util.flushBw("èŒä½");
+        util.flushBw("Ö°Î»");
         String indexJob = util.readClient();
         indexJudge[1] = indexJob;
-        util.flushBw("éƒ¨é—¨");
+        util.flushBw("²¿ÃÅ");
         String indexDepartment = util.readClient();
         indexJudge[2] = indexDepartment;
-        util.flushBw("ç”µè¯");
+        util.flushBw("µç»°");
         String indexPhoneNum = util.readClient();
         indexJudge[3] = indexPhoneNum;
         if (sqlUtils.checkIdentityValue(indexJudge[0], indexJudge[1], indexJudge[2], indexJudge[3])!=-1){
-            util.flushBw("è¯¥å‘˜å·¥å·²å­˜åœ¨");
+            util.flushBw("¸ÃÔ±¹¤ÒÑ´æÔÚ");
             MainSystem.printIdentityMenu();
+        }else {
+            setWorker();
         }
-        setWorker();
     }
 
     default void deleteEmployeeIdentity() throws Exception {
-        util.flushBw("è¯·è¾“å…¥å‘˜å·¥IDï¼š");
+        util.flushBw("ÇëÊäÈëÔ±¹¤ID£º");
         Integer indexDelete = util.getIntegar();
-        String sql = "select * from employee_identity where id = '" + indexDelete + "';";
-        MainSystem.rs = MainSystem.stmt.executeQuery(sql);
-        if (!MainSystem.rs.next()) {
-            util.flushBw("è¾“å…¥IDæœ‰è¯¯");
-            changeEmployeeIdentity();
+        if (indexDelete==-1){
+            util.flushBw("ÊäÈëIDÓĞÎó");
+            MainSystem.printIdentityMenu();
+        }else {
+            String sql = "select * from employee_identity where id =" + indexDelete + ";";
+            MainSystem.rs = MainSystem.stmt.executeQuery(sql);
+            if (!MainSystem.rs.next()) {
+                util.flushBw("ÊäÈëIDÓĞÎó");
+                MainSystem.printIdentityMenu();
+            } else {
+                printPersonalIdentity(sql);
+                MainSystem.stmt.executeUpdate(sqlUtils.deleteIdentityValue("employee_identity", indexDelete));
+                util.flushBw("É¾³ı³É¹¦");
+                MainSystem.printIdentityMenu();
+            }
         }
-        printPersonalIdentity(sql);
-        MainSystem.stmt.executeUpdate(sqlUtils.deleteIdentityValue("employee_identity",indexDelete));
-        util.flushBw("åˆ é™¤æˆåŠŸ");
-        MainSystem.printIdentityMenu();
     }
 
 
     default void showEmployeeIdentity() throws Exception {
-        util.flushBw("è¯·è¾“å…¥å‘˜å·¥å§“åï¼š");
+        util.flushBw("ÇëÊäÈëÔ±¹¤ĞÕÃû£º");
         String searchName = util.readClient();
         printPersonalIdentity(searchName);
         MainSystem.printIdentityMenu();
     }
 
     default void changeEmployeeIdentity() throws Exception {
-        util.flushBw("è¯·è¾“å…¥å‘˜å·¥IDï¼š");
+        util.flushBw("ÇëÊäÈëÔ±¹¤ID£º");
         Integer indexChange = util.getIntegar();
-        String sql = "select * from employee_identity where id = '" + indexChange + "';";
-        MainSystem.rs = MainSystem.stmt.executeQuery(sql);
-        if (!MainSystem.rs.next()) {
-            util.flushBw("è¾“å…¥IDæœ‰è¯¯");
-            changeEmployeeIdentity();
+        if (indexChange==-1){
+            util.flushBw("ÊäÈëIDÓĞÎó");
+            MainSystem.printIdentityMenu();
+        }else {
+            String sql = "select * from employee_identity where id = '" + indexChange + "';";
+            MainSystem.rs = MainSystem.stmt.executeQuery(sql);
+            if (!MainSystem.rs.next()) {
+                util.flushBw("ÊäÈëIDÓĞÎó");
+                MainSystem.printIdentityMenu();
+            } else {
+                util.flushBw("ÇëÊäÈëÔ±¹¤ĞÕÃû");
+                String indexName = util.readClient();
+                indexJudge[0] = indexName;
+                util.flushBw("Ö°Î»");
+                String indexJob = util.readClient();
+                indexJudge[1] = indexJob;
+                util.flushBw("²¿ÃÅ");
+                String indexDepartment = util.readClient();
+                indexJudge[2] = indexDepartment;
+                util.flushBw("µç»°");
+                String indexPhoneNum = util.readClient();
+                indexJudge[3] = indexPhoneNum;
+                MainSystem.stmt.executeUpdate(sqlUtils.updateIdentityValue("employee_identity", indexChange, indexJudge[0], indexJudge[1], indexJudge[2], indexJudge[3]));
+                util.flushBw("ĞŞ¸Ä³É¹¦");
+                MainSystem.stmt.executeUpdate(sqlUtils.updateSalaryValue("employee_salary", indexChange, "0", "0", "0", "" + sqlUtils.checkJob(indexChange) + "", indexName));
+                MainSystem.printIdentityMenu();
+            }
         }
-        util.flushBw("è¯·è¾“å…¥å‘˜å·¥å§“å");
-        String indexName = util.readClient();
-        indexJudge[0] = indexName;
-        util.flushBw("èŒä½");
-        String indexJob = util.readClient();
-        indexJudge[1] = indexJob;
-        util.flushBw("éƒ¨é—¨");
-        String indexDepartment = util.readClient();
-        indexJudge[2] = indexDepartment;
-        util.flushBw("ç”µè¯");
-        String indexPhoneNum = util.readClient();
-        indexJudge[3] = indexPhoneNum;
-        MainSystem.stmt.executeUpdate(sqlUtils.updateIdentityValue("employee_identity", indexChange, indexJudge[0], indexJudge[1], indexJudge[2], indexJudge[3]));
-        util.flushBw("ä¿®æ”¹æˆåŠŸ");
-        MainSystem.stmt.executeUpdate(sqlUtils.updateSalaryValue("employee_salary",indexChange,"0","0","0",""+sqlUtils.checkJob(indexChange)+"",indexName));
-        MainSystem.printIdentityMenu();
     }
 
     default void showAllEmployeeIdentity() throws Exception {
-        util.printBw("å‘˜å·¥åˆ—è¡¨ï¼š");
-        util.flushBw("id       å§“å      èŒåŠ¡       éƒ¨é—¨        ç”µè¯");
+        util.printBw("Ô±¹¤ÁĞ±í£º");
+        util.flushBw("id       ĞÕÃû      Ö°Îñ       ²¿ÃÅ        µç»°");
         printIdentityList();
         MainSystem.printIdentityMenu();
     }
@@ -88,8 +101,8 @@ public interface IdentityImpl {
         MainSystem.stmt.executeUpdate(sqlUtils.insertValue("employee_identity", 5, "null", indexJudge[0], indexJudge[1], indexJudge[2], indexJudge[3]));
         int indexid=sqlUtils.checkIdentityValue(indexJudge[0], indexJudge[1], indexJudge[2], indexJudge[3]);
         MainSystem.stmt.executeUpdate(sqlUtils.insertValue("employee_salary",7,""+indexid+"",""+indexJudge[0]+"","0","0","0",""+sqlUtils.checkJob(indexid)+"",""+util.getTime()+""));
-        util.printBw("æ·»åŠ æˆåŠŸ");
-        util.bw.write("æ·»åŠ çš„å‘˜å·¥ä¿¡æ¯ä¸º---");
+        util.printBw("Ìí¼Ó³É¹¦");
+        util.bw.write("Ìí¼ÓµÄÔ±¹¤ĞÅÏ¢Îª---");
         printPersonalIdentity(indexJudge[0]);
         MainSystem.printIdentityMenu();
     }

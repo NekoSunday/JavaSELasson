@@ -11,14 +11,16 @@ public class StartDatabase {
             String createAdminTable="create table admininfo(" +
                     "username varchar(20) default null," +
                     "password varchar(20) default null ," +
-                    "phone_number varchar(13) default null);";
+                    "phone_number varchar(50) default null)" +
+                    "ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=GBK;";
             String createIdentityTable="create table employee_identity(" +
                     "id int(11) not null AUTO_INCREMENT," +
                     "ename varchar(10) not null," +
-                    "job varchar(10) default '鍛樺伐'," +
+                    "job varchar(10) default '员工'," +
                     "dept varchar(10) default null," +
-                    "phone_number varchar(10) default null," +
-                    "primary key (id));";
+                    "phone_number varchar(50) default null," +
+                    "primary key (id))" +
+                    "ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=GBK;";
             String createSalaryTable="create table employee_salary(" +
                     "e_id int (11) not null ," +
                     "e_name varchar (20) default null," +
@@ -28,7 +30,8 @@ public class StartDatabase {
                     "s_sum double default '0'," +
                     "getdate timestamp null default null on update current_timestamp ," +
                     "key e_id(e_id)," +
-                    "constraint employee_salary_ibfk_1 foreign key (e_id) references employee_identity(id) ON DELETE CASCADE ON UPDATE CASCADE);";
+                    "constraint employee_salary_ibfk_1 foreign key (e_id) references employee_identity(id) ON DELETE CASCADE ON UPDATE CASCADE)" +
+                    "ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=GBK;";
             MainSystem.stmt.executeUpdate("drop database if exists employee_management;");
             MainSystem.stmt.executeUpdate(createDatabase);
             MainSystem.stmt.executeUpdate("use employee_management;");
@@ -42,6 +45,6 @@ public class StartDatabase {
     }
 
     public static void start(){
-        System.out.println("鏁版嵁搴撳垵濮嬪寲鎴愬姛");
+        System.out.println("数据库初始化成功");
     }
 }

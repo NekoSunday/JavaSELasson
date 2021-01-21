@@ -7,8 +7,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.junit.Test;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 
 public class demo {
@@ -42,7 +41,12 @@ public class demo {
         try {
             Connection c = Jsoup.connect("https://www.jd.com");
             Document doc = c.get();
-            System.out.println(doc);
+            Elements p = doc.getElementsByTag("p");
+            StringBuilder index= new StringBuilder();
+            for (Element element : p) {
+                index.append(element.text());
+            }
+            System.out.println(index.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -73,6 +77,31 @@ public class demo {
 
 
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public void test05(){
+        try {
+            File f = new File("d:/aaa/book.txt");
+            if (!f.exists()){
+                f.createNewFile();
+            }
+            BufferedWriter bw = new BufferedWriter(new FileWriter(f));
+            URL c = demo.class.getResource("/book.xml");
+            File file = new File(c.getPath());
+            Document doc = Jsoup.parse(file, "utf-8");
+            Elements p = doc.getElementsByTag("p");
+            StringBuilder index= new StringBuilder();
+            for (Element element : p) {
+                index.append(element.text()).append("\n\r");
+            }
+            bw.write(index.toString());
+            bw.flush();
+            bw.close();
+            System.out.println(index.toString());
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

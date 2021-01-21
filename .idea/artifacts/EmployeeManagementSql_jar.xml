@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="EmployeeManagementSql:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/EmployeeManagementSql_jar</output-path>
+    <root id="archive" name="EmployeeManagementSql.jar">
+      <element id="module-output" name="EmployeeManagementSql" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/EmployeeManagementSql/lib/druid-1.1.8.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/EmployeeManagementSql/lib/mysql-connector-java-5.1.49.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

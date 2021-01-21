@@ -50,38 +50,38 @@ public class Admin {
     }
 
     public static void registerAdmin() throws Exception {
-        util.flushBw("è¯·è¾“å…¥ç”¨æˆ·å");
+        util.flushBw("ÇëÊäÈëÓÃ»§Ãû");
         String user = util.readClient();
         MainSystem.ps = MainSystem.system.prepareStatement("select username from admininfo where username=?");
         MainSystem.ps.setString(1, user);
         MainSystem.rs = MainSystem.ps.executeQuery();
         if (MainSystem.rs.next()) {
-            util.flushBw("ç”¨æˆ·å·²å­˜åœ¨ï¼Œè¯·é‡æ–°è¾“å…¥");
+            util.flushBw("ÓÃ»§ÒÑ´æÔÚ£¬ÇëÖØĞÂÊäÈë");
             MainSystem.printAdmin();
         }
-        util.flushBw("è¯·è¾“å…¥å¯†ç ");
+        util.flushBw("ÇëÊäÈëÃÜÂë");
         String password = util.readClient();
-        util.flushBw("è¯·è¾“å…¥ç”µè¯å·ç ");
+        util.flushBw("ÇëÊäÈëµç»°ºÅÂë");
         String phoneNum = util.readClient();
         MainSystem.stmt.executeUpdate(sqlUtils.insertValue("admininfo", 3, user, password, phoneNum));
-        util.flushBw("æ³¨å†Œç®¡ç†å‘˜æˆåŠŸ!");
+        util.flushBw("×¢²á¹ÜÀíÔ±³É¹¦!");
         MainSystem.printAdmin();
     }
 
     public static void loginAdmin() throws Exception {
         MainSystem.ps = MainSystem.system.prepareStatement("SELECT `username`,password From admininfo where username=? and password=?");
-        util.flushBw("è¯·è¾“å…¥ç”¨æˆ·å");
+        util.flushBw("ÇëÊäÈëÓÃ»§Ãû");
         String indexUser = util.readClient();
-        util.flushBw("è¯·è¾“å…¥å¯†ç ");
+        util.flushBw("ÇëÊäÈëÃÜÂë");
         String indexPassword = util.readClient();
         MainSystem.ps.setString(1, indexUser);
         MainSystem.ps.setString(2, indexPassword);
         MainSystem.rs = MainSystem.ps.executeQuery();
         if (MainSystem.rs.next()) {
-            util.flushBw("ç™»å½•æˆåŠŸ");
+            util.flushBw("µÇÂ¼³É¹¦");
             MainSystem.printMainMenu();
         } else {
-            util.flushBw("ç”¨æˆ·åã€å¯†ç è¾“å…¥é”™è¯¯");
+            util.flushBw("ÓÃ»§Ãû¡¢ÃÜÂëÊäÈë´íÎó");
             MainSystem.printAdmin();
         }
     }

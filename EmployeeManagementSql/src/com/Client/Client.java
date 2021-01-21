@@ -20,6 +20,10 @@ public class Client {
                         try {
                             s = br.readLine();
                             System.out.println(s);
+                            if (s.equals("ÏµÍ³ÍË³ö")){
+                                br.close();
+                                break;
+                            }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -37,6 +41,16 @@ public class Client {
                             bw.write(i);
                             bw.write("\n");
                             bw.flush();
+                            if (i.equals("0")){
+                                if (!br.ready()) {
+                                    try {
+                                        bw.close();
+                                        break;
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -47,4 +61,5 @@ public class Client {
             e.printStackTrace();
         }
     }
+
 }

@@ -7,49 +7,59 @@ import com.utilpackage.util;
 public interface SalaryImpl {
     default void setEmployeeSalary() throws Exception {
         String indexname = null;
-        util.flushBw("è¯·è¾“å…¥å‘˜å·¥IDï¼š");
+        util.flushBw("ÇëÊäÈëÔ±¹¤ID£º");
         Integer indexId = util.getIntegar();
-        String sql = "select * from employee_salary where e_id = '" + indexId + "';";
-        MainSystem.rs = MainSystem.stmt.executeQuery(sql);
-        if (!MainSystem.rs.next()) {
-            util.flushBw("è¾“å…¥IDæœ‰è¯¯");
+        if (indexId==-1){
+            util.flushBw("ÊäÈëIDÓĞÎó");
             MainSystem.printSalaryMenu();
-        } else {
-            indexname = MainSystem.rs.getString("e_name");
+        }else {
+            String sql = "select * from employee_salary where e_id = '" + indexId + "';";
+            MainSystem.rs = MainSystem.stmt.executeQuery(sql);
+            if (!MainSystem.rs.next()) {
+                util.flushBw("ÊäÈëIDÓĞÎó");
+                MainSystem.printSalaryMenu();
+            } else {
+                indexname = MainSystem.rs.getString("e_name");
+                util.flushBw("¹¤×÷Ê±³¤£º");
+                Double indexWorkTime = util.getDouble();
+                util.flushBw("¹¤×÷µ¥¼Û£º");
+                Double indexSalaryPerHour = util.getDouble();
+                util.flushBw("³öÇÚ½±½ğ£º");
+                Double indexBonusMoney = util.getDouble();
+                MainSystem.stmt.executeUpdate(sqlUtils.updateSalaryValue("employee_salary", indexId, indexWorkTime.toString(), indexSalaryPerHour.toString(), indexBonusMoney.toString(), getSumSalary(indexId, indexWorkTime, indexSalaryPerHour, indexBonusMoney).toString(), indexname));
+                util.printBw("Ìí¼Ó³É¹¦£¡");
+                util.printBw("Ô±¹¤ĞÅÏ¢Îª£º");
+                printPersonalSalary(sql);
+                MainSystem.printSalaryMenu();
+            }
         }
-        util.flushBw("å·¥ä½œæ—¶é•¿ï¼š");
-        Double indexWorkTime = util.getDouble();
-        util.flushBw("å·¥ä½œå•ä»·ï¼š");
-        Double indexSalaryPerHour = util.getDouble();
-        util.flushBw("å‡ºå‹¤å¥–é‡‘ï¼š");
-        Double indexBonusMoney = util.getDouble();
-        MainSystem.stmt.executeUpdate(sqlUtils.updateSalaryValue("employee_salary", indexId, indexWorkTime.toString(), indexSalaryPerHour.toString(), indexBonusMoney.toString(), getSumSalary(indexId, indexWorkTime, indexSalaryPerHour, indexBonusMoney).toString(), indexname));
-        util.printBw("æ·»åŠ æˆåŠŸï¼");
-        util.printBw("å‘˜å·¥ä¿¡æ¯ä¸ºï¼š");
-        printPersonalSalary(sql);
-        MainSystem.printSalaryMenu();
     }
 
     default void deleteEmployeeSalary() throws Exception {
         String indexname = null;
-        util.flushBw("è¯·è¾“å…¥å‘˜å·¥IDï¼š");
+        util.flushBw("ÇëÊäÈëÔ±¹¤ID£º");
         Integer indexDelete = util.getIntegar();
-        String sql = "select * from employee_salary where e_id = '" + indexDelete + "';";
-        MainSystem.rs = MainSystem.stmt.executeQuery(sql);
-        if (!MainSystem.rs.next()) {
-            util.flushBw("è¾“å…¥IDæœ‰è¯¯");
+        if (indexDelete==-1){
+            util.flushBw("ÊäÈëIDÓĞÎó");
             MainSystem.printSalaryMenu();
-        } else {
-            indexname = MainSystem.rs.getString("e_name");
+        }else {
+            String sql = "select * from employee_salary where e_id = '" + indexDelete + "';";
+            MainSystem.rs = MainSystem.stmt.executeQuery(sql);
+            if (!MainSystem.rs.next()) {
+                util.flushBw("ÊäÈëIDÓĞÎó");
+                MainSystem.printSalaryMenu();
+            } else {
+                indexname = MainSystem.rs.getString("e_name");
+                printPersonalSalary(sql);
+                MainSystem.stmt.executeUpdate(sqlUtils.updateSalaryValue("employee_salary", indexDelete, "0", "0", "0", "" + sqlUtils.checkJob(indexDelete) + "", indexname));
+                util.flushBw("É¾³ı³É¹¦");
+                MainSystem.printSalaryMenu();
+            }
         }
-        printPersonalSalary(sql);
-        MainSystem.stmt.executeUpdate(sqlUtils.updateSalaryValue("employee_salary", indexDelete, "0", "0", "0", ""+sqlUtils.checkJob(indexDelete)+"", indexname));
-        util.flushBw("åˆ é™¤æˆåŠŸ");
-        MainSystem.printSalaryMenu();
     }
 
     default void showEmployeeSalary() throws Exception {
-        util.flushBw("è¯·è¾“å…¥å‘˜å·¥å§“åï¼š");
+        util.flushBw("ÇëÊäÈëÔ±¹¤ĞÕÃû£º");
         String searchName = util.readClient();
         String sql = "select * from employee_salary where e_id=(select id from employee_identity where ename='" + searchName + "');";
         sqlUtils.printSalaryValues(sql);
@@ -57,45 +67,53 @@ public interface SalaryImpl {
     }
 
     default void changeEmployeeSalary() throws Exception {
-        util.flushBw("è¯·è¾“å…¥å‘˜å·¥IDï¼š");
+        String indexname = null;
+        util.flushBw("ÇëÊäÈëÔ±¹¤ID£º");
         Integer indexChange = util.getIntegar();
-        String sql = "select * from employee_salary where e_id = '" + indexChange + "';";
-        MainSystem.rs = MainSystem.stmt.executeQuery(sql);
-        if (!MainSystem.rs.next()) {
-            util.flushBw("è¾“å…¥IDæœ‰è¯¯");
+        if (indexChange==-1){
+            util.flushBw("ÊäÈëIDÓĞÎó");
+            MainSystem.printSalaryMenu();
+        }else {
+            String sql = "select * from employee_salary where e_id = '" + indexChange + "';";
+            MainSystem.rs = MainSystem.stmt.executeQuery(sql);
+            if (!MainSystem.rs.next()) {
+                util.flushBw("ÊäÈëIDÓĞÎó");
+                MainSystem.printSalaryMenu();
+            } else {
+                indexname = MainSystem.rs.getString("e_name");
+            }
+            util.printBw("Ô±¹¤ĞÅÏ¢Îª£º");
+            sqlUtils.printSalaryValues(sql);
+            util.flushBw("¸ÃĞÅÏ¢ÊÇ·ñÕıÈ·");
+            String judgeChange = util.readClient();
+            switch (judgeChange) {
+                case "ÕıÈ·":
+                    break;
+                case "´íÎó":
+                    changeEmployeeSalary();
+                    break;
+                default:
+                    util.flushBw("ÊäÈë´íÎó");
+                    changeEmployeeSalary();
+                    break;
+            }
+            util.flushBw("¹¤×÷Ê±³¤£º");
+            Double indexWorkTime = util.getDouble();
+            util.flushBw("¹¤×÷µ¥¼Û£º");
+            Double indexSalaryPerHour = util.getDouble();
+            util.flushBw("³öÇÚ½±½ğ£º");
+            Double indexBonusMoney = util.getDouble();
+            MainSystem.stmt.executeUpdate(sqlUtils.updateSalaryValue("employee_salary", indexChange, indexWorkTime.toString(), indexSalaryPerHour.toString(), indexBonusMoney.toString(), getSumSalary(indexChange, indexWorkTime, indexSalaryPerHour, indexBonusMoney).toString(), indexname));
+            util.printBw("ĞŞ¸Ä³É¹¦£¡");
+            util.flushBw("ĞŞ¸ÄµÄĞÅÏ¢Îª£º");
+            printPersonalSalary(sql);
             MainSystem.printSalaryMenu();
         }
-        util.printBw("å‘˜å·¥ä¿¡æ¯ä¸ºï¼š");
-        sqlUtils.printSalaryValues(sql);
-        util.flushBw("è¯¥ä¿¡æ¯æ˜¯å¦æ­£ç¡®");
-        String judgeChange = util.readClient();
-        switch (judgeChange) {
-            case "æ­£ç¡®":
-                break;
-            case "é”™è¯¯":
-                changeEmployeeSalary();
-                break;
-            default:
-                util.flushBw("è¾“å…¥é”™è¯¯");
-                changeEmployeeSalary();
-                break;
-        }
-        util.flushBw("å·¥ä½œæ—¶é•¿ï¼š");
-        Double indexWorkTime = util.getDouble();
-        util.flushBw("å·¥ä½œå•ä»·ï¼š");
-        Double indexSalaryPerHour = util.getDouble();
-        util.flushBw("å‡ºå‹¤å¥–é‡‘ï¼š");
-        Double indexBonusMoney = util.getDouble();
-        MainSystem.stmt.executeUpdate(sqlUtils.updateSalaryValue("employee_salary", indexChange, indexWorkTime.toString(), indexSalaryPerHour.toString(), indexBonusMoney.toString(), getSumSalary(indexChange, indexWorkTime, indexSalaryPerHour, indexBonusMoney).toString()));
-        util.printBw("ä¿®æ”¹æˆåŠŸï¼");
-        util.flushBw("ä¿®æ”¹çš„ä¿¡æ¯ä¸ºï¼š");
-        printPersonalSalary(sql);
-        MainSystem.printSalaryMenu();
     }
 
     default void showAllEmployeeSalary() throws Exception {
-        util.printBw("å·¥èµ„åˆ—è¡¨ï¼š");
-        util.printBw("id       å§“å      å·¥ä½œæ—¶é•¿       å·¥ä½œå•ä»·        å·¥èµ„æ€»é¢      æ“ä½œæ—¥æœŸ");
+        util.printBw("¹¤×ÊÁĞ±í£º");
+        util.printBw("id       ĞÕÃû      ¹¤×÷Ê±³¤       ¹¤×÷µ¥¼Û        ¹¤×Ê×Ü¶î      ²Ù×÷ÈÕÆÚ");
         String sql = "select * from employee_salary;";
         sqlUtils.printSalaryValues(sql);
         MainSystem.printSalaryMenu();

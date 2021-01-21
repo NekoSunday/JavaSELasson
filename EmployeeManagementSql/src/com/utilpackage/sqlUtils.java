@@ -36,7 +36,7 @@ public class sqlUtils {
     }
 
     public static void close(Connection conn, Statement stmt, ResultSet rs) {
-        //å…³é—­ç»“æœé›†
+        //¹Ø±Õ½á¹û¼¯
         if (rs != null) {
             try {
                 rs.close();
@@ -44,7 +44,7 @@ public class sqlUtils {
                 e.printStackTrace();
             }
         }
-        //å…³é—­è¯­å¥å¯¹è±¡
+        //¹Ø±ÕÓï¾ä¶ÔÏó
         if (stmt != null) {
             try {
                 stmt.close();
@@ -52,7 +52,7 @@ public class sqlUtils {
                 e.printStackTrace();
             }
         }
-        //å…³é—­è¿æ¥å¯¹è±¡
+        //¹Ø±ÕÁ¬½Ó¶ÔÏó
         if (conn != null) {
             try {
                 conn.close();
@@ -63,7 +63,7 @@ public class sqlUtils {
     }
 
     public static void close(Connection conn, Statement stmt) {
-        //å…³é—­è¯­å¥å¯¹è±¡
+        //¹Ø±ÕÓï¾ä¶ÔÏó
         if (stmt != null) {
             try {
                 stmt.close();
@@ -71,7 +71,7 @@ public class sqlUtils {
                 e.printStackTrace();
             }
         }
-        //å…³é—­è¿æ¥å¯¹è±¡
+        //¹Ø±ÕÁ¬½Ó¶ÔÏó
         if (conn != null) {
             try {
                 conn.close();
@@ -108,18 +108,23 @@ public class sqlUtils {
 
     public static void printIdentityValues(String sql) {
         try {
+            boolean flag = false;
             MainSystem.rs = MainSystem.stmt.executeQuery(sql);
             while (MainSystem.rs.next()) {
+                flag = true;
                 int id = MainSystem.rs.getInt("id");
                 String ename = MainSystem.rs.getString("ename");
                 String job = MainSystem.rs.getString("job");
                 String dept = MainSystem.rs.getString("dept");
                 String phone_number = MainSystem.rs.getString("phone_number");
                 if (sql.contains("where")) {
-                    util.flushBw("IDï¼š" + id + "ï¼Œå§“åï¼š" + ename + "ï¼ŒèŒåŠ¡ï¼š" + job + "ï¼Œéƒ¨é—¨ï¼š" + dept + "ï¼Œç”µè¯ï¼š" + phone_number);
+                    util.flushBw("ID£º" + id + "£¬ĞÕÃû£º" + ename + "£¬Ö°Îñ£º" + job + "£¬²¿ÃÅ£º" + dept + "£¬µç»°£º" + phone_number);
                 } else {
                     util.flushBw(id + "        " + ename + "        " + job + "        " + dept + "        " + phone_number);
                 }
+            }
+            if (!flag) {
+                util.flushBw("²éÎŞ´ËÈË");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -166,7 +171,7 @@ public class sqlUtils {
             String sql = "select job from employee_identity where id='" + id + "';";
             MainSystem.rs = MainSystem.stmt.executeQuery(sql);
             MainSystem.rs.next();
-            if (MainSystem.rs.getString("job").equals("ç»ç†")) {
+            if (MainSystem.rs.getString("job").equals("¾­Àí")) {
                 return 2000;
             } else {
                 return 0;
@@ -179,7 +184,7 @@ public class sqlUtils {
 
     public static String updateSalaryValue(String tableName, Integer id, String... enterValues) {
         try {
-            String sql = "update " + tableName + " set workTime='" + enterValues[0] + "',s_per_hour='" + enterValues[1] + "',bonus_money='" + enterValues[2] + "',s_sum='" + enterValues[3] + "',e_name='" + enterValues[4] +"' where e_id='" + id + "';";
+            String sql = "update " + tableName + " set workTime='" + enterValues[0] + "',s_per_hour='" + enterValues[1] + "',bonus_money='" + enterValues[2] + "',s_sum='" + enterValues[3] + "',e_name='" + enterValues[4] + "' where e_id='" + id + "';";
             return sql;
         } catch (Exception e) {
             e.printStackTrace();
@@ -189,8 +194,10 @@ public class sqlUtils {
 
     public static void printSalaryValues(String sql) {
         try {
+            boolean flag=false;
             MainSystem.rs = MainSystem.stmt.executeQuery(sql);
             while (MainSystem.rs.next()) {
+                flag=true;
                 int id = MainSystem.rs.getInt("e_id");
                 String name = MainSystem.rs.getString("e_name");
                 double workTime = MainSystem.rs.getDouble("workTime");
@@ -199,10 +206,13 @@ public class sqlUtils {
                 double s_sum = MainSystem.rs.getDouble("s_sum");
                 Timestamp ts = MainSystem.rs.getTimestamp("getdate");
                 if (sql.contains("where")) {
-                    util.flushBw("IDï¼š" + id +"ï¼Œå§“åï¼š"+name+ "ï¼Œå·¥ä½œæ—¶é•¿ï¼š" + workTime + "ï¼Œå·¥ä½œå•ä»·ï¼š" + s_per_hour + "ï¼Œå‡ºå‹¤å¥–é‡‘ï¼š" + bonus_money + "ï¼Œå·¥èµ„æ€»é¢ï¼š" + s_sum + "ï¼Œæ“ä½œæ—¥æœŸï¼š" + ts);
+                    util.flushBw("ID£º" + id + "£¬ĞÕÃû£º" + name + "£¬¹¤×÷Ê±³¤£º" + workTime + "£¬¹¤×÷µ¥¼Û£º" + s_per_hour + "£¬³öÇÚ½±½ğ£º" + bonus_money + "£¬¹¤×Ê×Ü¶î£º" + s_sum + "£¬²Ù×÷ÈÕÆÚ£º" + ts);
                 } else {
-                    util.flushBw(id + "        " +name+"        "+ workTime + "        " + s_per_hour + "        " + s_sum + "        " + ts);
+                    util.flushBw(id + "        " + name + "        " + workTime + "        " + s_per_hour + "        " + s_sum + "        " + ts);
                 }
+            }
+            if (!flag) {
+                util.flushBw("²éÎŞ´ËÈË");
             }
         } catch (Exception e) {
             e.printStackTrace();

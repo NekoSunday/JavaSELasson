@@ -19,8 +19,14 @@ public class util {
         return new Timestamp(System.currentTimeMillis());
     }
 
-    public static Integer getIntegar() throws IOException {
+    public static Integer getIntegar() throws Exception {
         String integarIndex = readClient();
+        char[] indexChar = integarIndex.toCharArray();
+        for (char c : indexChar) {
+            if (c<=48 || c>=57){
+                return -1;
+            }
+        }
         return Integer.valueOf(integarIndex);
     }
 
