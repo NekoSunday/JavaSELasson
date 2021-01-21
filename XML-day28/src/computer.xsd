@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="sunday"
+           elementFormDefault="qualified">
+    <xs:element name='电脑' id="computer">
+        <xs:complexType>
+            <xs:sequence maxOccurs='unbounded'>
+                <xs:element name='硬件'>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name='鼠标' type='xs:string'/>
+                            <xs:element name='键盘' type='xs:string'/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="显卡">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="牌子" type="xs:string"/>
+                            <xs:element name="型号" type="xs:string"/>
+                            <xs:element name="价格" type="xs:double"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name='软件'>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name='idea' type='xs:string'/>
+                            <xs:element name='navicat' type='xs:string'/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name='价格' type='xs:double'/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

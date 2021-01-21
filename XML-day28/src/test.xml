@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--只能有一个根元素-->
+<persons>
+    <!--这是一个人-->
+    <person id="110">
+        <!--姓名-->
+        <name>张三</name>
+        <!--性别-->
+        <sex/>
+        <!--年龄-->
+        <age>20</age>
+    </person>
+
+    <!--这是一个人-->
+    <person id="110">
+        <!--姓名-->
+        <name>张三</name>
+        <!--性别-->
+        <sex/>
+        <!--年龄-->
+        <age>20</age>
+    </person>
+    <sql>
+        select * from student where age &lt; 20
+    </sql>
+
+    <sql>
+        <![CDATA[select * from student where id > 1 and age < 20;]]>
+    </sql>
+</persons>

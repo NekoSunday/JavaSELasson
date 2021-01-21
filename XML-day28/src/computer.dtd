@@ -1,0 +1,8 @@
+<!ELEMENT 电脑 (硬件+,软件,价格)>
+<!ELEMENT 硬件 (鼠标,键盘)>
+<!ELEMENT 软件 (idea,navicat)>
+<!ELEMENT 价格 (#PCDATA)>
+<!ELEMENT 鼠标 (#PCDATA)>
+<!ELEMENT 键盘 (#PCDATA)>
+<!ELEMENT idea (#PCDATA)>
+<!ELEMENT navicat (#PCDATA)>
