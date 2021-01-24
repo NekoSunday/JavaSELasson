@@ -1,6 +1,7 @@
 package com.sunday.Jsoup;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+//import org.junit.jupiter.api.Test;
 
 public class JunitPratice {
     /*public static void main(String[] args) {

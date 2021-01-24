@@ -40,7 +40,7 @@ public class test {
             Class<Direction> declaringClass = dc.getDeclaringClass();
             Method show02 = declaringClass.getDeclaredMethod("show02");
             show02.setAccessible(true);
-            show02.invoke(dc,null);
+            show02.invoke(dc, (Object) null);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (NoSuchMethodException e) {
