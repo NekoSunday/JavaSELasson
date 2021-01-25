@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="BeanUtils">
+    <CLASSES>
+      <root url="file://D:/存货/jar包/BeanUtils" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://D:/存货/jar包/BeanUtils" recursive="false" />
+  </library>
+</component>
