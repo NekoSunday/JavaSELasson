@@ -2,6 +2,8 @@ package com.sunday.数组.寻找数组的中心索引;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 /**
  * 寻找数组的中心索引
  *
@@ -20,10 +22,28 @@ public class demo {
 
     @Test
     public void test(){
-
+        pivotIndex(new int[]{-1,-1,0,-1,-1,0});
     }
 
     public int pivotIndex(int[] nums) {
-        return 0;
+        if(nums==null||nums.length==0){
+            return -1;
+        }
+        int left=0,right=0;
+        for(int num:nums){
+            right+=num;
+        }
+        right-=nums[0];
+        if(right==left){
+            return 0;
+        }
+        for(int i=1,length=nums.length;i<length;i++){
+            right-=nums[i];
+            left+=nums[i-1];
+            if(right==left){
+                return i;
+            }
+        }
+        return -1;
     }
 }
