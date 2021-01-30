@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.5.1.min.js"></script>
+</head>
+
+<body>
+<input type="button" value="get的方式" onclick="fun()">
+</body>
+
+<script>
+
+    function fun() {
+        $.get({
+            url:"demo01",
+            async:true,
+            data:"username=zhangsan&password=123&flag=1",
+            type:"post",
+            success:function (response) {
+                alert("返回"+JSON.stringify(response))
+            },
+            error:function (response) {
+                alert(JSON.stringify(response))
+            }
+        })
+    }
+</script>
+</html>
