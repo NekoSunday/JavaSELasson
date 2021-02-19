@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding" native2AsciiForPropertiesFiles="true" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/../JavaLasson/javaWeb-day38/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../JavaLasson/javaWeb-day38/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/EmployeeManagementSql" charset="GBK" />
     <file url="file://$PROJECT_DIR$/EmployeeManagementSql/src/com/Client/Client.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/EmployeeManagementSql/src/com/sunday/Admin.java" charset="GBK" />

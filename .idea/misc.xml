@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/../JavaLasson/javaWeb-day38" />
     <file type="web" url="file://$PROJECT_DIR$/JavaWeb-day36" />
     <file type="web" url="file://$PROJECT_DIR$/../JavaSELesson/JavaWeb-day37" />
   </component>
@@ -9,6 +10,7 @@
       <list>
         <option value="$PROJECT_DIR$/JavaWeb-day36/pom.xml" />
         <option value="$PROJECT_DIR$/../JavaSELesson/JavaWeb-day37/pom.xml" />
+        <option value="$PROJECT_DIR$/../JavaLasson/javaWeb-day38/pom.xml" />
       </list>
     </option>
   </component>

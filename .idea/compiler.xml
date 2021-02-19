@@ -6,15 +6,17 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="JavaWeb-day37" />
-        <module name="JavaWeb-day36" />
+        <module name="javaWeb-day38" />
         <module name="JavaWeb-day36 (1) (org.example)" />
+        <module name="JavaWeb-day36" />
+        <module name="JavaWeb-day37" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="JavaWeb-day36" target="1.8" />
       <module name="JavaWeb-day36 (1) (org.example)" target="1.5" />
       <module name="JavaWeb-day37" target="1.8" />
+      <module name="javaWeb-day38" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
